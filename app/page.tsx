@@ -1,3 +1,4 @@
+import HeroCarousel from "@/Components/HeroCarousel";
 import Image from "next/image";
 import React from "react";
 
@@ -25,6 +26,7 @@ const Home = () => {
               conversion rates and enhance user engagement.
             </p>
           </div>
+          <HeroCarousel />
         </div>
       </section>
       <section className="trending-section">
