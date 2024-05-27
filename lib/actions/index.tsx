@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import Product from "../models/product.model";
-import { scrapeAmazonProduct } from "../scraper";
-import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 import { connectToDB } from "../DB";
+import Product from "../models/product.model";
+import { scrapeAmazonProduct, scrapeAmazonProducts } from "../scraper";
+import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
@@ -42,6 +42,22 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     );
 
     revalidatePath(`/products/${newProduct._id}`);
+  } catch (error: any) {
+    throw new Error(`Failed to create/update product: ${error.message}`);
+  }
+}
+
+export async function scrapeAndStoreProducts(Url: string) {
+  if (!Url) return;
+
+  try {
+    console.log(Url);
+    const scrapedProducts = await scrapeAmazonProducts(Url);
+
+    if (!scrapedProducts) return;
+
+    let products = scrapedProducts;
+    console.log(products);
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`);
   }
