@@ -1,26 +1,7 @@
 "use client";
 
-import { scrapeAndStoreProduct } from "@/lib/actions";
+import { scrapeAndStoreProducts } from "@/lib/actions";
 import { FormEvent, useState } from "react";
-
-const isValidAmazonProductURL = (url: string) => {
-  try {
-    const parsedURL = new URL(url);
-    const hostname = parsedURL.hostname;
-
-    if (
-      hostname.includes("amazon.com") ||
-      hostname.includes("amazon.") ||
-      hostname.endsWith("amazon")
-    ) {
-      return true;
-    }
-  } catch (error) {
-    return false;
-  }
-
-  return false;
-};
 
 const Searchbar = () => {
   const [searchPrompt, setSearchPrompt] = useState("");
@@ -29,15 +10,13 @@ const Searchbar = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isValidLink = isValidAmazonProductURL(searchPrompt);
-
-    if (!isValidLink) return alert("Please provide a valid Amazon link");
-
     try {
       setIsLoading(true);
 
       // Scrape the product page
-      const product = await scrapeAndStoreProduct(searchPrompt);
+      const product = await scrapeAndStoreProducts(
+        `https://www.amazon.com/s?k=${searchPrompt}`
+      );
       console.log(product);
     } catch (error) {
       console.log(error);
@@ -52,7 +31,7 @@ const Searchbar = () => {
         type="text"
         value={searchPrompt}
         onChange={(e) => setSearchPrompt(e.target.value)}
-        placeholder="Enter product link"
+        placeholder="Search"
         className="searchbar-input"
       />
 

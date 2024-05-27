@@ -33,7 +33,8 @@ export async function scrapeAmazonProduct(url: string) {
     const currentPrice = extractPrice(
       $(".priceToPay span.a-price-whole"),
       $(".a.size.base.a-color-price"),
-      $(".a-button-selected .a-color-base")
+      $(".a-button-selected .a-color-base"),
+      $(".a-price span.a-price-whole")
     );
 
     const originalPrice = extractPrice(
@@ -85,5 +86,74 @@ export async function scrapeAmazonProduct(url: string) {
     return data;
   } catch (error: any) {
     console.log(error);
+  }
+}
+
+export async function scrapeAmazonProducts(url: string) {
+  if (!url) return [];
+
+  const username = String(process.env.BRIGHT_DATA_USERNAME);
+  const password = String(process.env.BRIGHT_DATA_PASSWORD);
+  const port = 22225;
+  const session_id = (1000000 * Math.random()) | 0;
+
+  const options = {
+    auth: {
+      username: `${username}-session-${session_id}`,
+      password,
+    },
+    host: "brd.superproxy.io",
+    port,
+    rejectUnauthorized: false,
+  };
+
+  try {
+    // Fetch the search results page
+    const response = await axios.get(url, options);
+    const $ = cheerio.load(response.data);
+
+    console.log("response", response.data);
+
+    // Array to store product data
+    const productsData: {
+      url: string;
+      currency: any;
+      image: string | undefined;
+      title: string;
+      currentPrice: number;
+      stars: number;
+    }[] = [];
+
+    // Iterate over each product on the page
+    $("div[data-component-type='s-search-result']").each((index, element) => {
+      const title = $(element).find("h2 span.a-text-normal").text().trim();
+      const currentPrice = extractPrice(
+        $(element).find(".a-price-whole"),
+        $(element).find(".a-price .a-price-whole")
+      );
+      const images = $(element).find("img.s-image").attr("src");
+      const currency = extractCurrency($(element).find(".a-price-symbol"));
+
+      // Construct data object with scraped information
+      const data = {
+        url,
+        currency: currency || "$",
+        image: images,
+        title,
+        currentPrice: Number(currentPrice),
+        stars:
+          parseFloat($(element).find(".a-icon-alt").text().split(" ")[0]) || 0,
+      };
+
+      // Add product data to the array
+      productsData.push(data);
+    });
+
+    console.log(productsData);
+
+    return productsData;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Failed to scrape products: ${error.message}`);
   }
 }
