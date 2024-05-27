@@ -1,6 +1,6 @@
 "use client";
 
-import { scrapeAndStoreProducts } from "@/lib/actions";
+import { scrapeAndStoreProducts, scrapeAndStoreProduct } from "@/lib/actions";
 import { FormEvent, useState } from "react";
 
 const Searchbar = () => {
@@ -14,10 +14,10 @@ const Searchbar = () => {
       setIsLoading(true);
 
       // Scrape the product page
-      const product = await scrapeAndStoreProducts(
+      /* const product = await scrapeAndStoreProducts(
         `https://www.amazon.com/s?k=${searchPrompt}`
-      );
-      console.log(product);
+      ); */
+      const product = await scrapeAndStoreProduct(searchPrompt);
     } catch (error) {
       console.log(error);
     } finally {

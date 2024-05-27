@@ -40,7 +40,7 @@ const HeroCarousel = () => {
         alt="arrow"
         width={140}
         height={140}
-        className="max-xl:hidden absolute -left-[30%] bottom-0 z-0"
+        className="max-xl:hidden absolute -left-[30%] -bottom-[70px] z-0"
       />
     </div>
   );
