@@ -36,11 +36,50 @@ export function extractCurrency(element: any) {
   return currencyText ? currencyText : "";
 }
 
+// Extracts element Path from amazon
+export function extractPath($: any) {
+  const selectors = [
+    ".a-unordered-list.a-horizontal.a-size-small .a-list-item",
+  ];
+
+  for (const selector of selectors) {
+    const elements = $(selector);
+    if (elements.length > 0) {
+      const textContent = elements
+        .map((_: any, element: any) => $(element).text().trim())
+        .get()
+        .join("\n");
+      return textContent;
+    }
+  }
+
+  // If no matching elements were found, return an empty string
+  return "";
+}
+
+// Extracts element Category
+export function extractCategory(path: string): string {
+  // Replace all newline characters and multiple spaces with a single space
+  const cleanedPath = path
+    .replace(/\s*\n\s*/g, " ") // Replace newlines and surrounding whitespace with a single space
+    .replace(/\s*›\s*/g, " > ") // Replace '›' and surrounding whitespace with ' > '
+    .replace(/\s+/g, " ") // Replace multiple spaces with a single space
+    .trim();
+
+  const parts = cleanedPath.split(">");
+  const lastElement = parts[parts.length - 1].trim();
+
+  console.log("Original Path:", path);
+  console.log("Cleaned Path:", cleanedPath);
+  console.log("Extracted Last Element:", lastElement);
+
+  return lastElement;
+}
+
 // Extracts description from two possible elements from amazon
 export function extractDescription($: any) {
   // these are possible elements holding description of the product
   const selectors = [
-    ".a-unordered-list .a-list-item",
     ".a-expander-content p",
     // Add more selectors here if needed
   ];

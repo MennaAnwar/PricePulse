@@ -1,5 +1,5 @@
 import PriceInfoCard from "@/Components/PriceInfoCard";
-//import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/Components/ProductCard";
 import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
@@ -20,6 +20,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
 
   return (
     <div className="product-container">
+      <div>{product.path}</div>
       <div className="flex gap-28 xl:flex-row flex-col">
         <div className="product-image">
           <Image
@@ -190,9 +191,9 @@ const ProductDetails = async ({ params: { id } }: Props) => {
           <p className="section-text">Similar Products</p>
 
           <div className="flex flex-wrap gap-10 mt-7 w-full">
-            {/* {similarProducts.map((product) => (
+            {similarProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
-            ))} */}
+            ))}
           </div>
         </div>
       )}
