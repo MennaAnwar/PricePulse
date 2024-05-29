@@ -1,32 +1,14 @@
 "use client";
 
-import { scrapeAndStoreProducts, scrapeAndStoreProduct } from "@/lib/actions";
-import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 
 const Searchbar = () => {
   const [searchPrompt, setSearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      setIsLoading(true);
-
-      // Scrape the product page
-      /* const product = await scrapeAndStoreProducts(
-        `https://www.amazon.com/s?k=${searchPrompt}`
-      ); */
-      const product = await scrapeAndStoreProduct(searchPrompt);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
+    <div className="flex flex-wrap gap-4 mt-12">
       <input
         type="text"
         value={searchPrompt}
@@ -35,14 +17,10 @@ const Searchbar = () => {
         className="searchbar-input"
       />
 
-      <button
-        type="submit"
-        className="searchbar-btn"
-        disabled={searchPrompt === ""}
-      >
+      <Link className="searchbar-btn" href={searchPrompt}>
         {isLoading ? "Searching..." : "Search"}
-      </button>
-    </form>
+      </Link>
+    </div>
   );
 };
 
