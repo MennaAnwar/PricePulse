@@ -1,6 +1,10 @@
 import PriceInfoCard from "@/Components/PriceInfoCard";
 import ProductCard from "@/Components/ProductCard";
-import { getProductById, getSimilarProducts } from "@/lib/actions";
+import {
+  getProductById,
+  getSimilarProducts,
+  scrapeAndStoreProduct,
+} from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image";

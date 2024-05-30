@@ -129,6 +129,7 @@ export async function scrapeAmazonProducts(url: string) {
       title: string;
       currentPrice: number;
       stars: number;
+      _id: string | undefined;
     }[] = [];
 
     // Iterate over each product on the page
@@ -140,6 +141,9 @@ export async function scrapeAmazonProducts(url: string) {
       );
       const images = $(element).find("img.s-image").attr("src");
       const currency = extractCurrency($(element).find(".a-price-symbol"));
+      const _id = `https://amazon.com${$(element)
+        .find("h2 a.a-link-normal")
+        .attr("href")}`;
 
       // Construct data object with scraped information
       const data = {
@@ -150,6 +154,7 @@ export async function scrapeAmazonProducts(url: string) {
         currentPrice: Number(currentPrice),
         stars:
           parseFloat($(element).find(".a-icon-alt").text().split(" ")[0]) || 0,
+        _id,
       };
 
       // Add product data to the array
