@@ -3,7 +3,7 @@
 import Searchbar from "@/Components/Searchbar";
 import { scrapeAndStoreProducts } from "@/lib/actions";
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/Components/ProductCard";
+import Products from "@/Components/Products";
 
 type Props = {
   params: { search: string };
@@ -48,7 +48,7 @@ const Search = ({ params: { search } }: Props) => {
         <h2 className="section-text py-10">Results for: "{search}"</h2>
         <div className="flex flex-wrap gap-x-8 gap-y-16">
           {products?.map((product: any) => (
-            <ProductCard key={product._id} product={product} />
+            <Products key={product._id} product={product} />
           ))}
         </div>
       </section>
