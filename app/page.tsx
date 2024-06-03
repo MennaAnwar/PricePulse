@@ -2,7 +2,6 @@ import HeroCarousel from "@/Components/HeroCarousel";
 import ProductCard from "@/Components/ProductCard";
 import Searchbar from "@/Components/Searchbar";
 import { getAllProducts } from "@/lib/actions";
-import Image from "next/image";
 import React from "react";
 
 const Home = async () => {
@@ -13,15 +12,6 @@ const Home = async () => {
       <section className="px-6 md:px-20 py-24">
         <div className="flex max-xl:flex-col gap-16">
           <div className="flex flex-col justify-center">
-            <p className="small-text text-pink">
-              Enjoy Smart Shopping:
-              <Image
-                src="/assets/icons/arrow-right.svg"
-                alt="arrow-right"
-                width={16}
-                height={16}
-              />
-            </p>
             <h1 className="head-text">
               Maximize Your Savings with
               <span className="text-pink"> PricePulse</span> !
@@ -38,7 +28,7 @@ const Home = async () => {
       <section className="trending-section">
         <h2 className="section-text">Your Browsing History</h2>
 
-        <div className="flex flex-wrap gap-x-8 gap-y-16">
+        <div className="flex flex-wrap justify-center gap-x-2 gap-y-8">
           {allProducts?.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}

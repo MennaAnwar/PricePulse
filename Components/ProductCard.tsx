@@ -8,10 +8,6 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  /* const handleClick = async (url: any) => {
-    console.log(url);
-    const product = await scrapeAndStoreProduct(url);
-  }; */
   return (
     <Link href={`/products/${product._id}`} className="product-card border p-5">
       <div className="product-card_img-container">

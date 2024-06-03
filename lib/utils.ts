@@ -155,3 +155,27 @@ export const formatNumber = (num: number = 0) => {
     maximumFractionDigits: 0,
   });
 };
+
+// Extracts and returns the number of reviews from an element.
+export function extractNumberOfReviews($: any) {
+  const reviewText = $("#acrCustomerReviewText").text().trim();
+  const match = reviewText.match(/(\d+(,\d+)*).*rating/);
+
+  if (match) {
+    return parseInt(match[1].replace(/,/g, ""));
+  }
+
+  return 0;
+}
+
+// Extracts and returns the star rating from an element.
+export function extractStarRating($: any) {
+  const starText = $("#acrPopover").attr("title").trim();
+  const match = starText.match(/(\d\.\d) out of 5 stars/);
+
+  if (match) {
+    return parseFloat(match[1]);
+  }
+
+  return 0;
+}

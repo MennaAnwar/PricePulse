@@ -12,7 +12,6 @@ const Products = ({ product }: Props) => {
   const handleClick = async (url: any) => {
     console.log(url);
     const product = await scrapeAndStoreProduct(url);
-    console.log(product._id);
     window.location.href = `/products/${product._id}`;
   };
   return (

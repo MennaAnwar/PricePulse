@@ -6,8 +6,10 @@ import {
   extractCategory,
   extractCurrency,
   extractDescription,
+  extractNumberOfReviews,
   extractPath,
   extractPrice,
+  extractStarRating,
 } from "../utils";
 
 export async function scrapeAmazonProduct(url: string) {
@@ -68,6 +70,8 @@ export async function scrapeAmazonProduct(url: string) {
     const path = extractPath($);
     const category = extractCategory(path);
     const description = extractDescription($);
+    const reviews = extractNumberOfReviews($);
+    const stars = extractStarRating($);
 
     // Construct data object with scraped information
     const data = {
@@ -80,8 +84,8 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: Number(discountRate),
       category,
-      reviewsCount: 100,
-      stars: 4.5,
+      reviewsCount: reviews,
+      stars: stars,
       isOutOfStock: outOfStock,
       path,
       description,
