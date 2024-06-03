@@ -1,4 +1,6 @@
 import { PriceHistoryItem, Product } from "@/types";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 const Notification = {
   WELCOME: "WELCOME",
@@ -178,4 +180,8 @@ export function extractStarRating($: any) {
   }
 
   return 0;
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
