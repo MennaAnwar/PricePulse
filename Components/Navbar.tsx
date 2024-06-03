@@ -23,19 +23,6 @@ const Navbar = () => {
             Price<span className="text-pink">Pulse</span>
           </p>
         </Link>
-
-        <div className="flex items-center gap-5">
-          {navIcons.map((icon) => (
-            <Image
-              key={icon.alt}
-              src={icon.src}
-              alt={icon.alt}
-              width={28}
-              height={28}
-              className="object-contain"
-            />
-          ))}
-        </div>
       </nav>
     </header>
   );
